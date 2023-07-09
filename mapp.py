@@ -20,14 +20,12 @@ def get_ip():
     email_text = f'Subject: {subject}\n\n{message}'
 
     # Envio do email
-    try:
-        with smtplib.SMTP_SSL(email_server, email_port) as server:
-            server.login(email_sender, email_password)
-            server.sendmail(email_sender, email_recipient, email_text)
-    except Exception as e:
-        print(f'Erro ao enviar o email: {str(e)}')
-
-    return ''
+try:
+    with smtplib.SMTP_SSL(email_server, email_port) as server:
+        server.login(email_sender, email_password)
+        server.sendmail(email_sender, email_recipient, email_text)
+except Exception as e:
+    print(f'Erro ao enviar o email: {str(e)}')
 
 if __name__ == '__main__':
     app.run()
