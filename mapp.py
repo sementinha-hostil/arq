@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect
+from flask import Flask, request, jsonify
 import smtplib
 
 app = Flask(__name__)
@@ -25,12 +25,9 @@ def get_ip():
             server.login(email_sender, email_password)
             server.sendmail(email_sender, email_recipient, email_text)
     except Exception as e:
-        # Lidar com o erro de envio de email
-        pass
+        return jsonify({'error': f'Erro ao enviar o email: {str(e)}'})
 
-    whatsapp_url = f'https://wa.me/27998041981'
-
-    return redirect(whatsapp_url)
+    return jsonify({'ip': ip})
 
 if __name__ == '__main__':
     app.run()
