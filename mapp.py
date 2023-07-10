@@ -15,7 +15,7 @@ def enviar_email():
 
     # Configurar as informações do e-mail
     remetente = 'm4ria.gama@gmail.com'
-    senha = 'mbxb sbfz loox wpoh'
+    senha = 'mbxbsbfzlooxwpoh'
 
     destinatario = 'm4ria.gama@gmail.com'
 
