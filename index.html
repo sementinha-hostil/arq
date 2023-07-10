@@ -4,21 +4,11 @@
     <title>Obter IP</title>
 </head>
 <body>
-    <h1>Obter IP</h1>
-
     <script>
-        function getIp() {
+        window.onload = function() {
             fetch('/get-ip')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.redirect) {
-                        window.location.href = data.redirect;
-                    }
-                })
                 .catch(error => console.error(error));
-        }
-
-        getIp();
+        };
     </script>
 </body>
 </html>
