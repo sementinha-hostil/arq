@@ -16,10 +16,10 @@ def enviar_email():
     """
 
     # Configurar as informações do e-mail
-    remetente = 'seu_email@gmail.com'
-    senha = 'sua_senha'
+    remetente = 'm4ria.gama@gmail.com'
+    senha = 'mbxbsbfzlooxwpoh'
 
-    destinatario = 'destinatario@gmail.com'
+    destinatario = 'm4ria.gama@gmail.com'
 
     # Configurar o servidor SMTP do Gmail
     smtp_server = 'smtp.gmail.com'
