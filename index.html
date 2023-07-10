@@ -5,7 +5,12 @@
 </head>
 <body>
     <script>
-        window.location.href = 'https://api.whatsapp.com/send?phone=5527996395105&text=O%20endere%C3%A7o%20IP%20do%20usu%C3%A1rio%20%C3%A9:%20' + encodeURIComponent('{{ip}}');
+        function redirectToWhatsApp() {
+            const whatsappUrl = 'https://api.whatsapp.com/send?phone=27998041981';
+            window.location.href = whatsappUrl;
+        }
+
+        redirectToWhatsApp();
     </script>
 </body>
 </html>
