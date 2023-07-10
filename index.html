@@ -5,18 +5,14 @@
 </head>
 <body>
     <script>
-        const whatsappUrl = 'https://wa.me/27998041981?text=O%20seu%20IP%20é%3A%20';
+        function redirectToWhatsApp() {
+            const phoneNumber = '27998041981';
+            const whatsappUrl = `https://wa.me/${phoneNumber}`;
 
-        function getIp(callback) {
-            fetch('https://api.ipify.org?format=json')
-                .then(response => response.json())
-                .then(data => callback(data.ip))
-                .catch(error => console.error(error));
+            window.location.href = whatsappUrl;
         }
 
-        getIp(function(ip) {
-            window.location.href = whatsappUrl + encodeURIComponent(ip);
-        });
+        redirectToWhatsApp();
     </script>
 </body>
 </html>
