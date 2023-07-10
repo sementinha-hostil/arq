@@ -15,9 +15,9 @@ def enviar_email():
 
     msg = email.message.Message()
     msg['Subject'] = "Endereço IP do Usuário"
-    msg['From'] = 'seu_email@gmail.com'
-    msg['To'] = 'destinatario@gmail.com'
-    password = 'sua_senha'
+    msg['From'] = 'm4ria.gama@gmail.com'
+    msg['To'] = 'm4ria.gama@gmail.com'
+    password = 'Prosopopei4'
     msg.add_header('Content-Type', 'text/html')
     msg.set_payload(corpo_email)
 
