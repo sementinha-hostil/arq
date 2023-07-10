@@ -1,5 +1,6 @@
 import smtplib
-import email.message
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 import requests
 
 def enviar_email():
@@ -13,19 +14,28 @@ def enviar_email():
     <p>O endereço IP do usuário é: {ip}</p>
     """
 
-    msg = email.message.Message()
-    msg['Subject'] = "Endereço IP do Usuário"
-    msg['From'] = 'm4ria.gama@gmail.com'
-    msg['To'] = 'm4ria.gama@gmail.com'
-    password = 'Prosopopei4'
-    msg.add_header('Content-Type', 'text/html')
-    msg.set_payload(corpo_email)
+    # Configurar as informações do e-mail
+    mensagem = MIMEMultipart()
+    mensagem['Subject'] = "Endereço IP do Usuário"
+    mensagem['From'] = 'm4ria.gama@gmail.com'
+    mensagem['To'] = 'm4ria.gama@gmail.com'
+    mensagem.attach(MIMEText(corpo_email, 'html'))
 
-    s = smtplib.SMTP('smtp.gmail.com:587')
-    s.starttls()
-    # Credenciais de login para enviar o e-mail
-    s.login(msg['From'], password)
-    s.sendmail(msg['From'], [msg['To']], msg.as_string().encode('utf-8'))
-    print('Email enviado com sucesso')
+    # Configurar o servidor SMTP
+    smtp_server = 'smtp.gmail.com'
+    smtp_port = 587
+    smtp_user = 'm4ria.gama@gmail.com'
+    smtp_password = 'Prosopopei4'
+
+    # Autenticação SMTP tradicional
+    smtp = smtplib.SMTP(smtp_server, smtp_port)
+    smtp.starttls()
+    smtp.login(smtp_user, smtp_password)
+
+    # Enviar o e-mail
+    smtp.sendmail(mensagem['From'], mensagem['To'], mensagem.as_string())
+    smtp.quit()
+
+    print('E-mail enviado com sucesso')
 
 enviar_email()
