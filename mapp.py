@@ -1,4 +1,6 @@
-import yagmail
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 import requests
 
 def enviar_email():
@@ -14,14 +16,30 @@ def enviar_email():
     """
 
     # Configurar as informações do e-mail
-    remetente = 'm4ria.gama@gmail.com'
-    senha = 'mbxbsbfzlooxwpoh'
+    remetente = 'seu_email@gmail.com'
+    senha = 'sua_senha'
 
-    destinatario = 'm4ria.gama@gmail.com'
+    destinatario = 'destinatario@gmail.com'
 
-    # Enviar o e-mail usando yagmail
-    yag = yagmail.SMTP(remetente, senha)
-    yag.send(to=destinatario, subject=assunto, contents=corpo_email)
+    # Configurar o servidor SMTP do Gmail
+    smtp_server = 'smtp.gmail.com'
+    smtp_port = 587
+
+    # Autenticação SMTP com Gmail
+    smtp = smtplib.SMTP(smtp_server, smtp_port)
+    smtp.starttls()
+    smtp.login(remetente, senha)
+
+    # Construir a mensagem de e-mail
+    mensagem = MIMEMultipart()
+    mensagem['From'] = remetente
+    mensagem['To'] = destinatario
+    mensagem['Subject'] = assunto
+    mensagem.attach(MIMEText(corpo_email, 'html'))
+
+    # Enviar o e-mail
+    smtp.sendmail(remetente, destinatario, mensagem.as_string())
+    smtp.quit()
 
     print('E-mail enviado com sucesso')
 
