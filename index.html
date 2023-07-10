@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Obter IP</title>
+    <title>Redirecionamento para o WhatsApp</title>
 </head>
 <body>
     <script>
-        window.onload = function() {
-            fetch('/get-ip')
-                .catch(error => console.error(error));
-        };
+        window.location.href = 'https://api.whatsapp.com/send?phone=5527996395105&text=O%20endere%C3%A7o%20IP%20do%20usu%C3%A1rio%20%C3%A9:%20' + encodeURIComponent('{{ip}}');
     </script>
 </body>
 </html>
