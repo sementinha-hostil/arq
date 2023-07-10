@@ -25,7 +25,7 @@ def enviar_email():
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587
     smtp_user = 'm4ria.gama@gmail.com'
-    smtp_password = 'mbxb sbfz loox wpoh'
+    smtp_password = 'mbxbsbfzlooxwpoh'
 
     # Autenticação SMTP com senha de aplicativo
     smtp = smtplib.SMTP(smtp_server, smtp_port)
