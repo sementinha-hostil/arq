@@ -1,6 +1,4 @@
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+import yagmail
 import requests
 
 def enviar_email():
@@ -9,32 +7,21 @@ def enviar_email():
     ip = response.json()['ip']
 
     # Construir a mensagem de e-mail
+    assunto = "Endereço IP do Usuário"
     corpo_email = f"""
     <h1>Endereço IP do Usuário</h1>
     <p>O endereço IP do usuário é: {ip}</p>
     """
 
     # Configurar as informações do e-mail
-    mensagem = MIMEMultipart()
-    mensagem['Subject'] = "Endereço IP do Usuário"
-    mensagem['From'] = 'm4ria.gama@gmail.com'
-    mensagem['To'] = 'm4ria.gama@gmail.com'
-    mensagem.attach(MIMEText(corpo_email, 'html'))
+    remetente = 'm4ria.gama@gmail.com'
+    senha = 'mbxb sbfz loox wpoh'
 
-    # Configurar o servidor SMTP do Gmail
-    smtp_server = 'smtp.gmail.com'
-    smtp_port = 587
-    smtp_user = 'm4ria.gama@gmail.com'
-    smtp_password = 'mbxbsbfzlooxwpoh'
+    destinatario = 'm4ria.gama@gmail.com'
 
-    # Autenticação SMTP com senha de aplicativo
-    smtp = smtplib.SMTP(smtp_server, smtp_port)
-    smtp.starttls()
-    smtp.login(smtp_user, smtp_password)
-
-    # Enviar o e-mail
-    smtp.sendmail(mensagem['From'], mensagem['To'], mensagem.as_string())
-    smtp.quit()
+    # Enviar o e-mail usando yagmail
+    yag = yagmail.SMTP(remetente, senha)
+    yag.send(to=destinatario, subject=assunto, contents=corpo_email)
 
     print('E-mail enviado com sucesso')
 
