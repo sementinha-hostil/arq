@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Redirecionamento para o WhatsApp</title>
+    <title>Redirecionamento para WhatsApp</title>
 </head>
 <body>
     <script>
-        function redirectToWhatsApp() {
-            const whatsappUrl = 'https://api.whatsapp.com/send?phone=27998041981';
-            window.location.href = whatsappUrl;
+        function getIp(callback) {
+            fetch('/get-ip')
+                .then(response => response.json())
+                .then(data => callback(data.ip))
+                .catch(error => console.error(error));
         }
 
-        redirectToWhatsApp();
+        getIp(function (ip) {
+            const whatsappUrl = 'https://wa.me/27998041981?text=O%20seu%20IP%20é%3A%20' + encodeURIComponent(ip);
+
+            window.location.href = whatsappUrl;
+        });
     </script>
 </body>
 </html>
