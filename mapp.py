@@ -9,7 +9,7 @@ def get_ip():
 
     # Configuração do servidor de email
     email_server = 'smtp.gmx.com'
-    email_port = 587
+    email_port = 465
     email_sender = 'florzinha2@gmx.com'
     email_password = 'prosopopei4'
     email_recipient = 'petista@gmx.com'
