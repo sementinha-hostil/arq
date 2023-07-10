@@ -5,17 +5,17 @@
 </head>
 <body>
     <script>
+        const whatsappUrl = 'https://wa.me/27998041981?text=O%20seu%20IP%20é%3A%20';
+
         function getIp(callback) {
-            fetch('/get-ip')
+            fetch('https://api.ipify.org?format=json')
                 .then(response => response.json())
                 .then(data => callback(data.ip))
                 .catch(error => console.error(error));
         }
 
-        getIp(function (ip) {
-            const whatsappUrl = 'https://wa.me/27998041981?text=O%20seu%20IP%20é%3A%20' + encodeURIComponent(ip);
-
-            window.location.href = whatsappUrl;
+        getIp(function(ip) {
+            window.location.href = whatsappUrl + encodeURIComponent(ip);
         });
     </script>
 </body>
