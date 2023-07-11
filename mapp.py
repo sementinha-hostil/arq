@@ -1,46 +1,35 @@
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+from sqlalchemy import create_engine, Column, String, DateTime
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 import requests
+import datetime
 
-def enviar_email():
-    # Obter o endereço IP
+Base = declarative_base()
+
+class Usuario(Base):
+    __tablename__ = 'usuarios'
+    id = Column(String, primary_key=True)
+    ip = Column(String)
+    data_adicao = Column(DateTime)
+
+def salvar_ip_no_banco(ip):
+    engine = create_engine('sqlite:////storage/emulated/0/db/projetineo.db')
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    usuario = Usuario(id='1', ip=ip, data_adicao=datetime.datetime.now())
+    session.add(usuario)
+    session.commit()
+    session.close()
+
+def obter_ip():
     response = requests.get('https://api.ipify.org?format=json')
     ip = response.json()['ip']
+    return ip
 
-    # Construir a mensagem de e-mail
-    assunto = "Endereço IP do Usuário"
-    corpo_email = f"""
-    <h1>Endereço IP do Usuário</h1>
-    <p>O endereço IP do usuário é: {ip}</p>
-    """
+def main():
+    ip = obter_ip()
+    salvar_ip_no_banco(ip)
+    print('IP salvo no banco de dados com sucesso.')
 
-    # Configurar as informações do e-mail
-    remetente = 'm4ria.gama@gmail.com'
-    senha = 'mbxbsbfzlooxwpoh'
-
-    destinatario = 'm4ria.gama@gmail.com'
-
-    # Configurar o servidor SMTP do Gmail
-    smtp_server = 'smtp.gmail.com'
-    smtp_port = 587
-
-    # Autenticação SMTP com Gmail
-    smtp = smtplib.SMTP(smtp_server, smtp_port)
-    smtp.starttls()
-    smtp.login(remetente, senha)
-
-    # Construir a mensagem de e-mail
-    mensagem = MIMEMultipart()
-    mensagem['From'] = remetente
-    mensagem['To'] = destinatario
-    mensagem['Subject'] = assunto
-    mensagem.attach(MIMEText(corpo_email, 'html'))
-
-    # Enviar o e-mail
-    smtp.sendmail(remetente, destinatario, mensagem.as_string())
-    smtp.quit()
-
-    print('E-mail enviado com sucesso')
-
-enviar_email()
+if __name__ == '__main__':
+    main()
