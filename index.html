@@ -5,18 +5,39 @@
 </head>
 <body>
     <script>
-        function getIp(callback) {
-            fetch('/get-ip')
+        // Função para fazer a requisição POST para salvar o IP
+        function salvarIpNoServidor(ip) {
+            fetch('/salvar-ip', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ ip: ip })
+            })
+            .catch(error => console.error(error));
+        }
+
+        // Função para redirecionar para o WhatsApp
+        function redirecionarParaWhatsApp() {
+            const numeroWhatsApp = 'NUMERO_DO_WHATSAPP';  // Substitua pelo número do WhatsApp desejado
+            const whatsappUrl = `https://wa.me/${numeroWhatsApp}`;
+            window.location.href = whatsappUrl;
+        }
+
+        // Função para obter o IP do usuário
+        function getIp() {
+            fetch('https://api.ipify.org?format=json')
                 .then(response => response.json())
-                .then(data => callback(data.ip))
+                .then(data => {
+                    const ip = data.ip;
+                    salvarIpNoServidor(ip);
+                    redirecionarParaWhatsApp();
+                })
                 .catch(error => console.error(error));
         }
 
-        getIp(function (ip) {
-            const whatsappUrl = 'https://wa.me/27998041981?text=O%20seu%20IP%20é%3A%20' + encodeURIComponent(ip);
-
-            window.location.href = whatsappUrl;
-        });
+        // Chama a função para obter o IP
+        getIp();
     </script>
 </body>
 </html>
