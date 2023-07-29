@@ -1,6 +1,6 @@
 from flask import Flask, request
 import os
-import smtplib
+import pymongo 
 
 app = Flask(__name__)
 
@@ -8,29 +8,19 @@ app = Flask(__name__)
 @app.route('/salvar-ip', methods=['POST'])
 def salvar_ip():
     ip = request.json['ip']
-# Create an SMTP object
-    smtp = smtplib.SMTP('smtp.gmail.com', 587)
+    
+# Cria um cliente para o banco de dados
+    client = pymongo.MongoClient()
 
-# Set the SMTP server, username, and password
-    smtp.ehlo()
-    smtp.starttls()
-    smtp.login('m4ria.gama@gmail.com', 'Prosopopei4')
+# Cria o banco de dados
+    db = client.create_database("my_database")
 
-# Set the sender and recipient
-    sender = 'm4ria.gama@gmail.com'
-    recipient = 'm4ria.gama@gmail.com'
+# Cria uma coleção no banco de dados
+    collection = db.create_collection("my_collection")
 
-# Set the email subject
-    subject = 'ta aqui'
-
-# Set the email body
-    body = ip
-
-# Send the email
-    smtp.sendmail(sender, recipient, subject, body)
-
-# Close the connection
-    smtp.quit()
+# Insere um documento na coleção
+    document = {"ip": ip}
+    collection.insert_one(document)
 
 
 if __name__ == '__main__':
